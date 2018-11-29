@@ -1,3 +1,3 @@
-###For start project run server with `npm start` and go to
-
+###Start node server -`npm start` 
+###Start db server - from `cli` run `mongod` and go to
 http://localhost:4000
