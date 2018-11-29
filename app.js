@@ -16,19 +16,21 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 const nav = [
-  {link: '/books', title: 'Book'},
-  {link: '/authors', title: 'Author'}
+  { link: '/books', title: 'Book' },
+  { link: '/authors', title: 'Author' }
 ];
 const bookRouter = require('./src/routes/bookRoutes')(nav);
+const adminRouter = require('./src/routes/adminRoutes')(nav);
 
 app.use('/books', bookRouter);
+app.use('/admin', adminRouter);
 app.get('/', (req, res) => {
   // res.sendFile(path.join(__dirname, '/views/', '/index.html'));
   res.render(
     'index',
     {
-      nav: [{link: '/books', title: 'Books'},
-        {link: '/authors', title: 'Authors'}],
+      nav: [{ link: '/books', title: 'Books' },
+        { link: '/authors', title: 'Authors' }],
       title: 'Library'
     }
   );
