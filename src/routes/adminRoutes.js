@@ -26,7 +26,7 @@ function router(nav) {
       (async function mongo() {
         let client;
         try {
-          client = await MongoClient.connect(url);
+          client = await MongoClient.connect(url, { useNewUrlParser: true });
           debug('connected correctly to server');
 
           const db = client.db(dbName);

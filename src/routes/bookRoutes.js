@@ -5,6 +5,13 @@ const debug = require('debug')('app:bookRoutes');
 const bookRouter = express.Router();
 
 function router(nav) {
+  bookRouter.use((req, res, next) => {
+    if (req.user) {
+      next();
+    } else {
+      res.redirect('/');
+    }
+  });
   bookRouter.route('/')
     .get((req, res) => {
       const url = 'mongodb://localhost:27017';
@@ -12,7 +19,7 @@ function router(nav) {
       (async function mongo() {
         let client;
         try {
-          client = await MongoClient.connect(url);
+          client = await MongoClient.connect(url, { useNewUrlParser: true });
           debug('connected correctly to server');
 
           const db = client.db(dbName);
@@ -30,7 +37,9 @@ function router(nav) {
         } catch (err) {
           debug(err.stack);
         }
-        client.close();
+        client.close(res)
+          .then(resClose => debug(resClose))
+          .catch(err => debug(err));
       }());
     });
   bookRouter.route('/:id')
@@ -42,7 +51,7 @@ function router(nav) {
       (async function mongo() {
         let client;
         try {
-          client = await MongoClient.connect(url);
+          client = await MongoClient.connect(url, { useNewUrlParser: true });
           debug('connected correctly to server');
 
           const db = client.db(dbName);
@@ -61,6 +70,9 @@ function router(nav) {
         } catch (err) {
           debug(err.stack);
         }
+        client.close(res)
+          .then(resClose => debug(resClose))
+          .catch(err => debug(err));
       }());
     });
 
