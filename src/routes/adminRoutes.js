@@ -8,12 +8,14 @@ const books = [
     title: 'War and Peace',
     genre: 'Historical',
     author: 'Tolstoy',
+    bookId: 656,
     read: false
   },
   {
     title: 'The Time Machine',
     genre: 'Science',
     author: 'Wells',
+    bookId: 2493,
     read: false
   }
 ];
